@@ -1,0 +1,300 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Pacifico&display=swap');
+@import 'tailwindcss';
+
+/* ===== Root Variables ===== */
+:root {
+  --pastel-green: #b8ecc4;
+  --pastel-blue: #9bd5d8;
+  --pastel-red: #ffc1b0;
+  --pastel-mint: #c0f5d0;
+  --retro-ink: #3b2e2a;
+  --retro-bg: #fff8f0;
+  --pastel-green2: #b9faed;
+  --pastel-light-yellow: #f7f4d9;
+}
+
+/* ===== Base Styling ===== */
+body.retro-bg {
+  background-color: var(--retro-bg);
+  color: var(--retro-ink);
+  font-family: 'Comic Neue', cursive, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== Header ===== */
+header {
+  padding: 0.9rem 1rem;
+}
+
+/* ===== Typography ===== */
+.fancy-title {
+  font-family: 'Pacifico', cursive;
+  color: var(--pastel-green);
+  text-shadow: 2px 2px var(--pastel-blue);
+  font-size: 1.75rem;
+}
+
+.subtitle {
+  color: var(--retro-ink);
+  font-style: italic;
+}
+
+/* ===== Navigation Buttons (shared styles) ===== */
+.retro-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.2rem;
+  background-color: var(--pastel-blue);
+  color: var(--retro-ink);
+  border: 2px solid var(--retro-ink);
+  border-radius: 9999px;
+  font-weight: bold;
+  font-family: 'Comic Neue', sans-serif;
+  font-size: 1rem;
+  box-shadow: 2px 2px 0 var(--retro-ink);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.retro-btn:hover {
+  background-color: var(--pastel-mint);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 3px 3px 0 var(--retro-ink);
+}
+
+.retro-btn:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0 var(--retro-ink);
+}
+
+/* ===== Back Button specifics ===== */
+.back-btn .arrow {
+  font-size: 1.2rem;
+}
+
+.back-btn:hover .arrow {
+  animation: wiggle 0.4s ease-in-out;
+}
+
+/* Wiggle effect */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+  75% { transform: rotate(-5deg); }
+}
+
+/* ===== Gallery Cards & Thumbnails ===== */
+.gallery-img,
+.thumb-img {
+  cursor: pointer;
+  border-radius: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-img:hover,
+.thumb-img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-card {
+  background-color: white;
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  border: 4px solid transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  max-width: 320px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  position: relative;
+  text-align: center;
+}
+
+.gallery-card[data-type="2d"] {
+  border-color: var(--pastel-blue);
+}
+
+.gallery-card[data-type="3d"] {
+  border-color: var(--pastel-mint);
+}
+
+.gallery-card:hover {
+  box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transform: scale(1.03);
+}
+
+.card-title {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
+  color: var(--retro-ink);
+}
+
+.card-desc {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 1rem;
+  min-height: 48px; /* consistent height */
+}
+
+.card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* ===== Enter Gallery Button ===== */
+.enter-gallery-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.2rem;
+  background-color: var( --pastel-light-yellow);
+  color: var(--retro-ink);
+  border: 2px solid var(--retro-ink);
+  border-radius: 9999px;
+  font-weight: bold;
+  font-family: 'Comic Neue', sans-serif;
+  font-size: 1rem;
+  box-shadow: 2px 2px 0 var(--retro-ink);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.enter-gallery-btn:hover {
+  background-color: var(--pastel-mint);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 3px 3px 0 var(--retro-ink);
+}
+
+.enter-gallery-btn:hover {
+  background-color: var(--pastel-green);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 3px 3px 0 var(--retro-ink);
+}
+
+/* ===== Thumbnail Grid Layout ===== */
+.thumbnail-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.thumbnail-grid:not(.hidden) {
+  opacity: 1;
+}
+
+.thumbnail-grid.hidden {
+  display: none !important;
+  pointer-events: none;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+.thumbnail-grid .grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  max-width: 960px;
+  width: 100%;
+  justify-items: center;
+}
+
+.thumbnail-grid-container {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-auto-flow: column;
+  gap: 1.5rem;
+}
+
+/* ===== Lightbox Overlay ===== */
+#lightbox {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#lightbox.show {
+  display: flex;
+}
+
+#lightbox img {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== Card Hover Effect ===== */
+.card-hover:hover {
+  transform: scale(1.03);
+  transition: transform 0.3s ease;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== Curtain Drop Animation ===== */
+@keyframes drop {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(0%); }
+}
+
+.animate-drop {
+  animation: drop 0.6s ease forwards;
+}
+
+/* Slide-Up Transition (Used on exit) */
+@keyframes slideUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-100%); }
+}
+
+#transition-overlay.slide-up {
+  animation: slideUp 0.8s forwards ease-in-out;
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.2rem;
+  background-color: var(--pastel-green2);
+  color: var(--retro-ink);
+  border: 2px solid var(--retro-ink);
+  border-radius: 9999px;
+  font-weight: bold;
+  font-family: 'Comic Neue', sans-serif;
+  font-size: 1rem;
+  box-shadow: 2px 2px 0 var(--retro-ink);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+  background-color: var(--pastel-mint);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 3px 3px 0 var(--retro-ink);
+}
+
+.nav-btn:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0 var(--retro-ink);
+}
