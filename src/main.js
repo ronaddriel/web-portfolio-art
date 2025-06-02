@@ -1,4 +1,6 @@
 import './style.css';
+let isTransitioning = false;
+
 
 // -------------------- Helper Functions --------------------
 const overlay = document.getElementById('transition-overlay');
@@ -17,29 +19,25 @@ window.addEventListener('resize', positionOverlay);
 
 // -------------------- Curtain Transition --------------------
 function runCurtainTransition(callback) {
-  if (!overlay) return;
+  if (!overlay || isTransitioning) return;
+  isTransitioning = true;
 
-  // Reset classes and show overlay
   overlay.classList.remove('hidden', 'slide-up', 'drop-down');
   overlay.classList.add('drop-down');
 
-  // Wait for drop-down animation to finish before calling callback
   overlay.addEventListener('animationend', function onDropDownEnd() {
-    // Remove this listener so it doesn't fire again
     overlay.removeEventListener('animationend', onDropDownEnd);
 
-    // Run the callback (update page)
     callback?.();
 
-    // Start slide-up animation to hide curtain
     overlay.classList.remove('drop-down');
     overlay.classList.add('slide-up');
 
-    // Listen for slide-up animation end to hide overlay
     overlay.addEventListener('animationend', function onSlideUpEnd() {
       overlay.classList.add('hidden');
       overlay.classList.remove('slide-up');
       overlay.removeEventListener('animationend', onSlideUpEnd);
+      isTransitioning = false; // allow new transitions
     });
   });
 }
