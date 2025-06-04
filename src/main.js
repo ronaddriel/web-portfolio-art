@@ -55,6 +55,7 @@ function runCurtainTransition(callback, targetId = null) {
   if (!overlay || isTransitioning) return;
   isTransitioning = true;
 
+document.body.classList.add('noscroll');
   overlay.classList.remove('hidden', 'slide-up', 'drop-down');
   overlay.classList.add('drop-down');
 
@@ -84,7 +85,9 @@ function runCurtainTransition(callback, targetId = null) {
   replayAnimationsInSection(targetId);
 }, 10); // Delay is small but ensures repaint
 
+      document.body.classList.remove('noscroll');
       isTransitioning = false;
+      
     });
   });
 }
