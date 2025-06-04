@@ -95,63 +95,59 @@ function runCurtainTransition(callback, targetId = null) {
 document.addEventListener('DOMContentLoaded', () => {
   // Navbar Buttons
   document.querySelectorAll('.nav-btn').forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const target = link.getAttribute('href').substring(1);
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = link.getAttribute('href').substring(1);
+    const isMobile = window.innerWidth <= 768;
 
-      runCurtainTransition(() => {
-        // Always show main sections on nav jump
-        document.getElementById('gallery-wrapper')?.classList.remove('hidden');
-        document.getElementById('art-gallery')?.classList.add('hidden');
-        document.querySelector('.back-btn')?.classList.add('hidden');
-
-        // Scroll to section
-        const targetEl = document.getElementById(target);
-        scrollToElementWithOffset(targetEl);
-      }, target);
-    });
-  });
-
-  // Gallery Enter Buttons
-  document.querySelectorAll('.gallery-card .enter-gallery-btn').forEach(button => {
-    button.addEventListener('click', e => {
-      e.stopPropagation();
-      const type = button.closest('.gallery-card')?.dataset.type;
-      runCurtainTransition(() => {
-        document.getElementById('gallery-wrapper')?.classList.add('hidden');
-        document.getElementById('art-gallery')?.classList.remove('hidden');
-
-        // Hide all thumbnail grids
-        document.querySelectorAll('#art-gallery > div.thumbnail-grid').forEach(div =>
-          div.classList.add('hidden')
-        );
-
-        // Show selected gallery
-        const gallery = document.getElementById(`${type}-gallery`);
-        if (gallery) {
-          gallery.classList.remove('hidden');
-          gallery.querySelector('.section-content')?.classList.add('content-visible');
-        }
-
-        document.querySelector('.back-btn')?.classList.remove('hidden');
-        scrollToElementWithOffset(document.getElementById('art-gallery'));
+    function goToTargetSection() {
+      // Unhide all main sections
+      document.querySelectorAll('section').forEach(section => {
+        section.classList.remove('hidden');
       });
-    });
-  });
 
-  // Back Button in Art Gallery
-  document.querySelector('.back-btn')?.addEventListener('click', () => {
-    runCurtainTransition(() => {
+      // Reset gallery state
       document.getElementById('art-gallery')?.classList.add('hidden');
       document.getElementById('gallery-wrapper')?.classList.remove('hidden');
 
-      document.querySelectorAll('#art-gallery > div.thumbnail-grid').forEach(div =>
-        div.classList.add('hidden')
-      );
+      document.querySelectorAll('#art-gallery > div.thumbnail-grid').forEach(section => {
+        section.classList.add('hidden');
+      });
 
-      scrollToElementWithOffset(document.getElementById('gallery-wrapper'));
-    });
+      document.querySelectorAll('#art-gallery .section-content').forEach(content => {
+        content.classList.remove('content-hidden');
+        content.classList.add('content-visible');
+      });
+
+      document.querySelector('.back-btn')?.classList.add('hidden');
+
+      const targetEl = document.getElementById(target);
+      if (targetEl) {
+        const headerOffset = 50;
+        const elementPosition = targetEl.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: isMobile ? 'smooth' : 'auto'
+        });
+      }
+
+      // Only replay animations if desktop
+      if (!isMobile) {
+        replayAnimationsInSection(target);
+      }
+    }
+
+    // Desktop → with transition
+    if (!isMobile) {
+      runCurtainTransition(goToTargetSection, target);
+    } else {
+      // Mobile → skip curtain
+      goToTargetSection();
+    }
   });
+});
 
   // Lightbox setup
   const lightbox = document.getElementById('lightbox');
@@ -168,6 +164,117 @@ document.addEventListener('DOMContentLoaded', () => {
       lightboxImg.src = '';
     }
   });
+
+  // Back button: mobile fade-out gallery, desktop curtain transition back
+const backBtn = document.querySelector('.back-btn');
+backBtn?.addEventListener('click', () => {
+  const isMobile = window.innerWidth <= 768;
+
+  const goBack = () => {
+    const artGallery = document.getElementById('art-gallery');
+    const galleryWrapper = document.getElementById('gallery-wrapper');
+
+    // Hide art gallery, show main gallery wrapper
+    artGallery?.classList.add('hidden');
+    galleryWrapper?.classList.remove('hidden');
+
+    // Hide all thumbnail grids inside art gallery
+    document.querySelectorAll('#art-gallery > div.thumbnail-grid').forEach(section => {
+      section.classList.add('hidden');
+    });
+
+    // Show all section contents in gallery wrapper
+    document.querySelectorAll('#gallery-wrapper .section-content').forEach(content => {
+      content.classList.remove('content-hidden');
+      content.classList.add('content-visible');
+    });
+
+    backBtn.classList.add('hidden');
+    scrollToElementWithOffset(galleryWrapper);
+  };
+
+  if (isMobile) {
+    // On mobile: fade out the currently visible gallery grid then go back
+    const visibleGallery = document.querySelector('#art-gallery > div.thumbnail-grid:not(.hidden)');
+    if (visibleGallery) {
+      visibleGallery.classList.remove('fade-in'); // reset fade
+      visibleGallery.classList.add('fade-out');
+      visibleGallery.addEventListener('animationend', function onFadeOut() {
+        visibleGallery.removeEventListener('animationend', onFadeOut);
+        visibleGallery.classList.remove('fade-out');
+        goBack();
+      });
+    } else {
+      goBack();
+    }
+  } else {
+    // Desktop: use curtain transition
+    runCurtainTransition(goBack);
+  }
+});
+
+  // Gallery enter buttons: mobile fade-in, desktop curtain transition
+document.querySelectorAll('.gallery-card .enter-gallery-btn').forEach(button => {
+  button.addEventListener('click', (e) => {
+    e.stopPropagation();
+
+    const card = button.closest('.gallery-card');
+    if (!card) return;
+    const selectedType = card.dataset.type;
+
+    const isMobile = window.innerWidth <= 768;
+
+    const runGallery = () => {
+      const selectedGallery = document.getElementById(`${selectedType}-gallery`);
+      const galleryWrapper = document.getElementById('gallery-wrapper');
+      const artGallery = document.getElementById('art-gallery');
+
+      // Hide gallery wrapper & show art gallery container
+      galleryWrapper?.classList.add('hidden');
+      artGallery?.classList.remove('hidden');
+
+      // Hide all thumbnail grids inside art gallery
+      document.querySelectorAll('#art-gallery > div.thumbnail-grid').forEach(section => {
+        section.classList.add('hidden');
+      });
+
+      if (selectedGallery) {
+        selectedGallery.classList.remove('hidden');
+
+        if (isMobile) {
+          // Trigger fade-in animation on mobile
+          selectedGallery.classList.remove('fade-in'); // reset animation
+          void selectedGallery.offsetWidth; // force reflow
+          selectedGallery.classList.add('fade-in');
+        }
+
+        // Ensure content visible
+        const galleryContent = selectedGallery.querySelector('.section-content');
+        if (galleryContent) {
+          galleryContent.classList.remove('content-hidden');
+          galleryContent.classList.add('content-visible');
+        }
+      }
+
+      // Show all section contents in gallery (fallback)
+      document.querySelectorAll('#art-gallery .section-content').forEach(content => {
+        content.classList.remove('content-hidden');
+        content.classList.add('content-visible');
+      });
+
+      document.querySelector('.back-btn')?.classList.remove('hidden');
+      scrollToElementWithOffset(artGallery);
+    };
+
+    if (isMobile) {
+      runGallery();
+    } else {
+      runCurtainTransition(runGallery);
+    }
+  });
+});
+
+
 
   // Scroll Animations
   const fadeObserver = new IntersectionObserver((entries) => {
