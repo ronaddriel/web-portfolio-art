@@ -3,7 +3,9 @@
 @import 'tailwindcss';
 
 /* ===== Prevent horizontal scroll ===== */
-
+body{
+  overflow-x: hidden;
+}
 /* ===== Root Variables ===== */
 :root {
   --pastel-green: #73e98f;
