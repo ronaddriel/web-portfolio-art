@@ -95,51 +95,22 @@ function runCurtainTransition(callback, targetId = null) {
 document.addEventListener('DOMContentLoaded', () => {
   // Navbar Buttons
   document.querySelectorAll('.nav-btn').forEach(link => {
-    e.preventDefault();
-  const target = link.getAttribute('href').substring(1);
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = link.getAttribute('href').substring(1);
 
-  const isMobile = window.innerWidth <= 768;
+      runCurtainTransition(() => {
+        // Always show main sections on nav jump
+        document.getElementById('gallery-wrapper')?.classList.remove('hidden');
+        document.getElementById('art-gallery')?.classList.add('hidden');
+        document.querySelector('.back-btn')?.classList.add('hidden');
 
-  const handleScrollAndShow = () => {
-    document.querySelectorAll('section').forEach(section => {
-      section.classList.remove('hidden');
+        // Scroll to section
+        const targetEl = document.getElementById(target);
+        scrollToElementWithOffset(targetEl);
+      }, target);
     });
-
-    document.getElementById('art-gallery')?.classList.add('hidden');
-    document.getElementById('gallery-wrapper')?.classList.remove('hidden');
-
-    document.querySelectorAll('#art-gallery > div.thumbnail-grid').forEach(section => {
-      section.classList.add('hidden');
-    });
-
-    document.querySelectorAll('#art-gallery .section-content').forEach(content => {
-      content.classList.remove('content-hidden');
-      content.classList.add('content-visible');
-    });
-
-    document.querySelector('.back-btn')?.classList.add('hidden');
-
-    const targetEl = document.getElementById(target);
-    if (targetEl) {
-      const headerOffset = 50;
-      const elementPosition = targetEl.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: isMobile ? 'smooth' : 'auto'
-      });
-    }
-
-    if (!isMobile) replayAnimationsInSection(target);
-  };
-
-  if (isMobile) {
-    handleScrollAndShow();
-  } else {
-    runCurtainTransition(handleScrollAndShow, target);
-  }
-});
+  });
 
   // Gallery Enter Buttons
   document.querySelectorAll('.gallery-card .enter-gallery-btn').forEach(button => {
