@@ -274,6 +274,28 @@ document.querySelectorAll('.gallery-card .enter-gallery-btn').forEach(button => 
   });
 });
 
+const pressables = document.querySelectorAll('.portfolio-box, .retro-btn, .nav-btn, .enter-gallery-btn');
+
+pressables.forEach(elem => {
+  elem.addEventListener('pointerdown', () => {
+    elem.classList.add('pressed');
+  });
+
+  
+  elem.addEventListener('animationend', () => {
+    elem.classList.remove('pressed');
+  });
+
+  //
+  elem.addEventListener('pointercancel', () => {
+    elem.classList.remove('pressed');
+  });
+
+  
+  elem.addEventListener('pointerup', () => {
+    elem.classList.remove('pressed');
+  });
+});
 
 
   // Scroll Animations

@@ -435,13 +435,6 @@ header {
   box-shadow: 3px 3px 0 var(--retro-ink);
 }
 
-.nav-btn:focus,
-.nav-btn:active {
-  outline: none;
-  background-color: transparent;
-  box-shadow: none;
-  color: inherit;
-}
 
 /* Optional: also handle visited links if you're using <a> tags */
 .nav-btn:visited {
@@ -667,4 +660,23 @@ body.noscroll {
   to {
     opacity: 1;
   }
+}
+
+/* Press animation: quick shrink and release */
+@keyframes press {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9); /* slightly smaller */
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Pressed state triggers the animation */
+.pressed {
+  animation: press 0.5s ease;
+  animation-fill-mode: forwards;
 }
