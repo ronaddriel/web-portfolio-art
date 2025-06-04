@@ -2,71 +2,72 @@ import './style.css';
 
 let isTransitioning = false;
 
-// -------------------- Helper Elements --------------------
 const overlay = document.getElementById('transition-overlay');
 const header = document.querySelector('header');
 
 function scrollToElementWithOffset(element, offset = 50) {
   if (!element) return;
-  const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-  const offsetPosition = elementPosition - offset;
-
-  window.scrollTo({
-    top: offsetPosition,
-    behavior: 'auto' // or 'smooth' if desired
-  });
+  const y = element.getBoundingClientRect().top + window.scrollY - offset;
+  window.scrollTo({ top: y, behavior: 'auto' });
 }
 
-// -------------------- Overlay Position --------------------
 function positionOverlay() {
   if (!overlay || !header) return;
-  const headerHeight = header.offsetHeight;
-  overlay.style.top = `${headerHeight}px`;
-  overlay.style.height = `calc(100% - ${headerHeight}px)`;
+  overlay.style.top = `${header.offsetHeight}px`;
+  overlay.style.height = `calc(100% - ${header.offsetHeight}px)`;
 }
 window.addEventListener('load', positionOverlay);
 window.addEventListener('resize', positionOverlay);
 
-// -------------------- Animation Restart Utility --------------------
 function restartAnimationsInSection(sectionId) {
   const section = document.getElementById(sectionId);
   if (!section) return;
-
   const animatedElements = section.querySelectorAll('[data-animate]');
-
   animatedElements.forEach(elem => {
     elem.classList.remove('animate-restart');
     elem.classList.add('reset-animation');
   });
-
-  // Delay ensures browser applies the reset state before re-adding animations
   requestAnimationFrame(() => {
     animatedElements.forEach(elem => {
-      void elem.offsetWidth; // force reflow
+      void elem.offsetWidth;
       elem.classList.remove('reset-animation');
       elem.classList.add('animate-restart');
     });
   });
 }
 
+function replayAnimationsInSection(sectionId) {
+  const section = document.getElementById(sectionId);
+  if (!section) return;
+  const content = section.querySelector('.section-content');
+  if (content) {
+    content.classList.remove('content-hidden');
+    content.classList.add('content-visible');
+  }
+  restartAnimationsInSection(sectionId);
+  section.querySelectorAll('[class*="animate-"]').forEach(elem => {
+    const animClasses = Array.from(elem.classList).filter(cls => cls.startsWith('animate-'));
+    animClasses.forEach(cls => elem.classList.remove(cls));
+    void elem.offsetWidth;
+    animClasses.forEach(cls => elem.classList.add(cls));
+  });
+}
 
-// -------------------- Curtain Transition --------------------
 function runCurtainTransition(callback, targetId = null) {
   if (!overlay || isTransitioning) return;
   isTransitioning = true;
+  document.body.classList.add('noscroll');
 
-document.body.classList.add('noscroll');
   overlay.classList.remove('hidden', 'slide-up', 'drop-down');
   overlay.classList.add('drop-down');
 
-  overlay.addEventListener('animationend', function onDropDownEnd() {
-    overlay.removeEventListener('animationend', onDropDownEnd);
+  overlay.addEventListener('animationend', function onDrop() {
+    overlay.removeEventListener('animationend', onDrop);
 
     callback?.();
 
     if (targetId) {
-      const targetSection = document.getElementById(targetId);
-      const content = targetSection?.querySelector('.section-content');
+      const content = document.getElementById(targetId)?.querySelector('.section-content');
       if (content) {
         content.classList.remove('content-visible');
         content.classList.add('content-hidden');
@@ -76,151 +77,88 @@ document.body.classList.add('noscroll');
     overlay.classList.remove('drop-down');
     overlay.classList.add('slide-up');
 
-    overlay.addEventListener('animationend', function onSlideUpEnd() {
+    overlay.addEventListener('animationend', function onUp() {
       overlay.classList.add('hidden');
       overlay.classList.remove('slide-up');
-      overlay.removeEventListener('animationend', onSlideUpEnd);
+      overlay.removeEventListener('animationend', onUp);
 
       setTimeout(() => {
-  replayAnimationsInSection(targetId);
-}, 10); // Delay is small but ensures repaint
+        replayAnimationsInSection(targetId);
+      }, 10);
 
       document.body.classList.remove('noscroll');
       isTransitioning = false;
-      
     });
   });
 }
 
-// -------------------- Replay Animations --------------------
-function replayAnimationsInSection(sectionId) {
-  const section = document.getElementById(sectionId);
-  if (!section) return;
-
-  // Show content area
-  const content = section.querySelector('.section-content');
-  if (content) {
-    content.classList.remove('content-hidden');
-    content.classList.add('content-visible');
-  }
-
-  // Restart any custom [data-animate] animations
-  restartAnimationsInSection(sectionId);
-
-  // Re-trigger Tailwind-like animate-* classes
-  const animatedElems = section.querySelectorAll('[class*="animate-"]');
-  animatedElems.forEach(elem => {
-    const classes = Array.from(elem.classList).filter(cls => cls.startsWith('animate-'));
-    classes.forEach(cls => elem.classList.remove(cls));
-    void elem.offsetWidth; // force reflow
-    classes.forEach(cls => elem.classList.add(cls));
-  });
-  console.log("Restarting animations in:", sectionId);
-}
-// -------------------- DOM Loaded Setup --------------------
 document.addEventListener('DOMContentLoaded', () => {
-  // Navbar Links
+  // Navbar Buttons
   document.querySelectorAll('.nav-btn').forEach(link => {
-    link.addEventListener('click', (e) => {
+    link.addEventListener('click', e => {
       e.preventDefault();
       const target = link.getAttribute('href').substring(1);
 
       runCurtainTransition(() => {
-        document.querySelectorAll('section').forEach(section => {
-          section.classList.remove('hidden');
-        });
-
-        document.getElementById('art-gallery')?.classList.add('hidden');
+        // Always show main sections on nav jump
         document.getElementById('gallery-wrapper')?.classList.remove('hidden');
-
-        document.querySelectorAll('#art-gallery > div.thumbnail-grid').forEach(section => {
-          section.classList.add('hidden');
-        });
-
-        document.querySelectorAll('#art-gallery .section-content').forEach(content => {
-          content.classList.remove('content-hidden');
-          content.classList.add('content-visible');
-        });
-
+        document.getElementById('art-gallery')?.classList.add('hidden');
         document.querySelector('.back-btn')?.classList.add('hidden');
 
-       const targetEl = document.getElementById(target);
-if (targetEl) {
-  const headerOffset = 50; // adjust this number as needed
-  const elementPosition = targetEl.getBoundingClientRect().top;
-  const offsetPosition = elementPosition + window.scrollY - headerOffset;
-
-  window.scrollTo({
-    top: offsetPosition,
-    behavior: 'auto' // or 'smooth' if you want smoother scroll
-  });
-}
+        // Scroll to section
+        const targetEl = document.getElementById(target);
+        scrollToElementWithOffset(targetEl);
       }, target);
     });
   });
 
-  // Gallery Cards
+  // Gallery Enter Buttons
   document.querySelectorAll('.gallery-card .enter-gallery-btn').forEach(button => {
-    button.addEventListener('click', (e) => {
+    button.addEventListener('click', e => {
       e.stopPropagation();
-
-      const card = button.closest('.gallery-card');
-      const selectedType = card.dataset.type;
-
+      const type = button.closest('.gallery-card')?.dataset.type;
       runCurtainTransition(() => {
         document.getElementById('gallery-wrapper')?.classList.add('hidden');
         document.getElementById('art-gallery')?.classList.remove('hidden');
 
-        document.querySelectorAll('#art-gallery > div.thumbnail-grid').forEach(section => {
-          section.classList.add('hidden');
-        });
+        // Hide all thumbnail grids
+        document.querySelectorAll('#art-gallery > div.thumbnail-grid').forEach(div =>
+          div.classList.add('hidden')
+        );
 
-        const selectedGallery = document.getElementById(`${selectedType}-gallery`);
-
-        if (selectedGallery) {
-          selectedGallery.classList.remove('hidden');
-
-          const galleryContent = selectedGallery.querySelector('.section-content');
-          if (galleryContent) {
-            galleryContent.classList.remove('content-hidden');
-            galleryContent.classList.add('content-visible');
-          }
+        // Show selected gallery
+        const gallery = document.getElementById(`${type}-gallery`);
+        if (gallery) {
+          gallery.classList.remove('hidden');
+          gallery.querySelector('.section-content')?.classList.add('content-visible');
         }
 
-        document.querySelectorAll('#art-gallery .section-content').forEach(content => {
-          content.classList.remove('content-hidden');
-          content.classList.add('content-visible');
-        });
-
         document.querySelector('.back-btn')?.classList.remove('hidden');
-
-       scrollToElementWithOffset(document.getElementById('art-gallery'));
+        scrollToElementWithOffset(document.getElementById('art-gallery'));
       });
     });
   });
 
-  // Back Button in Gallery
-  const backBtn = document.querySelector('.back-btn');
-  backBtn?.addEventListener('click', () => {
+  // Back Button in Art Gallery
+  document.querySelector('.back-btn')?.addEventListener('click', () => {
     runCurtainTransition(() => {
       document.getElementById('art-gallery')?.classList.add('hidden');
       document.getElementById('gallery-wrapper')?.classList.remove('hidden');
 
-      document.querySelectorAll('#art-gallery > div.thumbnail-grid').forEach(section => {
-        section.classList.add('hidden');
-      });
+      document.querySelectorAll('#art-gallery > div.thumbnail-grid').forEach(div =>
+        div.classList.add('hidden')
+      );
 
       scrollToElementWithOffset(document.getElementById('gallery-wrapper'));
     });
   });
 
-  // Lightbox
+  // Lightbox setup
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-image');
   document.querySelectorAll('.thumb-img').forEach(img => {
     img.addEventListener('click', () => {
-      const fullSrc = img.getAttribute('data-full') || img.src;
-      lightboxImg.src = fullSrc;
+      lightboxImg.src = img.dataset.full || img.src;
       lightbox.classList.add('show');
     });
   });
@@ -231,27 +169,24 @@ if (targetEl) {
     }
   });
 
-  // Intersection Scroll Animations
-  const fadeElements = document.querySelectorAll('.fade-scroll');
+  // Scroll Animations
   const fadeObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      } else {
-        entry.target.classList.remove('visible');
-      }
+      entry.target.classList.toggle('visible', entry.isIntersecting);
     });
   }, { threshold: 0.2 });
-  fadeElements.forEach(el => fadeObserver.observe(el));
 
-  const scrollSections = document.querySelectorAll('.section-scroll');
+  document.querySelectorAll('.fade-scroll').forEach(el => fadeObserver.observe(el));
+
   const scrollObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       entry.target.classList.toggle('visible', entry.isIntersecting);
     });
   }, { threshold: 0.3 });
-  scrollSections.forEach(section => scrollObserver.observe(section));
 
+  document.querySelectorAll('.section-scroll').forEach(section => scrollObserver.observe(section));
+
+  // Ensure all section content starts visible
   document.querySelectorAll('.section-content').forEach(content => {
     content.classList.remove('content-hidden');
     content.classList.add('content-visible');
