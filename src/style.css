@@ -70,6 +70,11 @@ body.retro-bg {
 /* ===== Header ===== */
 header {
   padding: 0.9rem 1rem;
+   position: fixed;  /* or sticky */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10000;  /* higher than overlay's 9999 */
 }
 
 .portfolio-box {
@@ -400,7 +405,10 @@ header {
   animation: slideUp 0.8s forwards ease-in-out;
 }
 #transition-overlay {
-  z-index: 40;
+   position: fixed;  /* or absolute if inside a container */
+  left: 0;
+  width: 100%;
+  z-index: 9999;   /* higher than page content but lower than header */
 }
 
 
