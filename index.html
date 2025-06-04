@@ -40,7 +40,7 @@
       </div>
 
       <!-- Character Image -->
-      <div class="hover-rotate-wrapper mt-6">
+      <div class="hover-rotate-wrapper mt-6 hidden md:block">
         <div id="HomeChar01-img" class="animate-restart" data-animate="slide-in-right" aria-hidden="true"></div>
       </div>
     </div>
@@ -68,31 +68,35 @@
   </section>
 
   <!-- Gallery -->
-  <section id="gallery-wrapper" class="min-h-screen flex flex-col justify-center items-center px-6 sm:px-12 md:px-24 text-center section-scroll">
-    <div class="section-content content-hidden max-w-screen-lg">
-      <!-- Title Box -->
-      <div class="animate-title"> 
-        <div class="title-box box-hover-effect">
-          <h2 class="fancy-title text-4xl sm:text-5xl md:text-7xl mb-2">Art Gallery</h2>
-        </div>
-      </div>
-
-      <div class="grid gap-8 sm:grid-cols-1 md:grid-cols-2">
-        <div class="gallery-card max-w-xs mx-auto" data-type="2d">
-          <h3 class="card-title">2D Art</h3>
-          <p class="card-desc">Illustrations and digital works.</p>
-          <img src="/art/thumbs/2d/2D-01.jpg" alt="2D Art" class="card-image max-w-full h-auto rounded" />
-          <button type="button" class="enter-gallery-btn retro-btn mt-2">View 2D Gallery</button>
-        </div>
-        <div class="gallery-card max-w-xs mx-auto" data-type="3d">
-          <h3 class="card-title">3D Art</h3>
-          <p class="card-desc">3D models and renders.</p>
-          <img src="/art/thumbs/3d/3D-01.jpg" alt="3D Art" class="card-image max-w-full h-auto rounded" />
-          <button type="button" class="enter-gallery-btn retro-btn mt-2">View 3D Gallery</button>
-        </div>
+<section id="gallery-wrapper" class="min-h-screen flex flex-col justify-center items-center px-6 sm:px-12 md:px-24 text-center section-scroll">
+  <div class="section-content content-hidden max-w-screen-lg">
+    <!-- Title Box -->
+    <div class="animate-title"> 
+      <div class="title-box box-hover-effect">
+        <h2 class="fancy-title text-4xl sm:text-5xl md:text-7xl mb-2">Art Gallery</h2>
       </div>
     </div>
-  </section>
+
+    <!-- Gallery Grid -->
+    <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 mt-8">
+      <!-- 2D Art -->
+      <div class="gallery-card max-w-xs mx-auto" data-type="2d">
+        <h3 class="card-title">2D Art</h3>
+        <p class="card-desc">Illustrations and digital works.</p>
+        <img src="/art/thumbs/2d/2D-01.jpg" alt="2D Art" class="card-image max-w-full h-auto rounded" />
+        <button type="button" class="enter-gallery-btn retro-btn mt-2">View 2D Gallery</button>
+      </div>
+
+      <!-- 3D Art -->
+      <div class="gallery-card max-w-xs mx-auto" data-type="3d">
+        <h3 class="card-title">3D Art</h3>
+        <p class="card-desc">3D models and renders.</p>
+        <img src="/art/thumbs/3d/3D-01.jpg" alt="3D Art" class="card-image max-w-full h-auto rounded" />
+        <button type="button" class="enter-gallery-btn retro-btn mt-2">View 3D Gallery</button>
+      </div>
+    </div>
+  </div>
+</section>
 
   <!-- Art Gallery Viewer -->
   <section id="art-gallery" class="hidden px-6 sm:px-12 md:px-24 py-16 text-center fade-scroll max-w-screen-lg mx-auto">
