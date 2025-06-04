@@ -427,9 +427,17 @@ header {
   box-shadow: 3px 3px 0 var(--retro-ink);
 }
 
+.nav-btn:focus,
 .nav-btn:active {
-  transform: translateY(1px);
-  box-shadow: 1px 1px 0 var(--retro-ink);
+  outline: none;
+  background-color: transparent;
+  box-shadow: none;
+  color: inherit;
+}
+
+/* Optional: also handle visited links if you're using <a> tags */
+.nav-btn:visited {
+  color: inherit;
 }
 
 /* === Homepage Animations === */
@@ -626,4 +634,9 @@ section {
   }
 }
 
+body.noscroll {
+  overflow: hidden;
+  height: 100vh;
+  touch-action: none;
+}
 /* ===== Meida Query ===== */
