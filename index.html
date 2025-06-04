@@ -1,65 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ron’s Art Portfolio</title>
-    <link rel="stylesheet" href="/style.css" />
-  </head>
-  <body class="retro-bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ron’s Art Portfolio</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body class="retro-bg overflow-x-hidden">
 
-    <!-- Header -->
-    <header class="flex justify-between items-center shadow-md sticky top-0 bg-[var(--retro-bg)] z-80">
-      <h1 class="fancy-title">Ron’s Portfolio</h1>
-      <nav class="nav-buttons flex gap-3">
-        <a href="#home" class="nav-btn">Home</a>
-        <a href="#about" class="nav-btn">About</a>
-        <a href="#gallery-wrapper" class="nav-btn">Gallery</a>
-        <a href="#contact" class="nav-btn">Contact</a>
-      </nav>
-    </header>
+  <header class="flex justify-between items-center shadow-md sticky top-0 bg-[var(--retro-bg)] z-80">
+    <div class="portfolio-box box-hover-effect">
+  <h1 class="text-0.1xl sm:text-0.2xl fancy-title-header">Ron's Portfolio</h1>
+</div>
+    <nav class="nav-buttons flex gap-3">
+      <a href="#home" class="nav-btn">Home</a>
+      <a href="#about" class="nav-btn">About</a>
+      <a href="#gallery-wrapper" class="nav-btn">Gallery</a>
+      <a href="#contact" class="nav-btn">Contact</a>
+    </nav>
+  </header>
 
-    <!-- Homepage -->
-    <section id="home" class="min-h-screen flex flex-col items-center justify-center text-center px-4">
-      <h2 class="fancy-title text-4xl mb-4">Ron Manosca</h2>
-      <p class="subtitle text-lg max-w-xl">Graphic Designer / UI & UX Explorer / Front-End Enthusiast</p>
-    </section>
-
-    <!-- About Me -->
-    <section id="about" class="min-h-screen flex flex-col items-center justify-center text-center px-4">
-      <h2 class="fancy-title text-3xl mb-4">About Me</h2>
-      <p class="max-w-2xl text-base">
-        Hello! I'm Ron, I am a current Senior at Lehman College. I major in CGI and enjoy creating various artworks using my computer and even my iPad! I enjoy creating visually appealing designs and am an avid gamer.
-      </p>
-    </section>
-
-
- <!-- Main Gallery Cards Section -->
-<section id="gallery-wrapper" class="min-h-screen flex flex-col justify-center items-center overflow-hidden relative px-4 text-center">
-  <h2 class="fancy-title text-3xl mb-8">Art Gallery</h2>
-  <div class="grid gap-8 md:grid-cols-2">
-
-    <!-- 2D Art Card -->
-    <div class="gallery-card" data-type="2d">
-      <h3 class="card-title">2D Art</h3>
-      <p class="card-desc">Illustrations, and digital works.</p>
-      <img src="/art/thumbs/2d/2D-01.jpg" alt="2D Art Sample" class="card-image" />
-      <button type="button" class="enter-gallery-btn retro-btn">View 2D Gallery</button>
+ <!-- Homepage -->
+<section id="home" class="min-h-screen flex flex-col items-center justify-center text-center px-4 section-scroll">
+  <div class="section-content content-hidden">
+    
+    <!-- Title Box -->
+    <div class="animate-title">
+      <div class="title-box box-hover-effect">
+        <h2 class="fancy-title text-5xl sm:text-6xl md:text-7xl mb-2">Ron Manosca</h2>
+      </div>
     </div>
 
-    <!-- 3D Art Card -->
-    <div class="gallery-card" data-type="3d">
-      <h3 class="card-title">3D Art</h3>
-      <p class="card-desc">3D model.</p>
-      <img src="/art/thumbs/3d/3D-01.jpg" alt="3D Art Sample" class="card-image" />
-      <button type="button" class="enter-gallery-btn retro-btn">View 3D Gallery</button>
+    <!-- Subtitle Box -->
+    <div class="animate-subtitle"> 
+    <div class="subtitle-box box-hover-effect">
+      <p class="subtitle text-base sm:text-lg md:text-xl">
+        Graphic Designer / UI & UX Designer / Front-End Developer
+      </p>
+    </div>
+    </div>
+
+    <!-- Character Image -->
+    <div class="hover-rotate-wrapper mt-6">
+      <div id="HomeChar01-img" class="animate-restart" data-animate="slide-in-right" aria-hidden="true"></div>
     </div>
 
   </div>
 </section>
 
-<!-- Art Gallery Viewer -->
-<section id="art-gallery" class="hidden px-4 py-16 text-center">
+
+  <!-- About Me -->
+  <section id="about" class="min-h-screen flex flex-col items-center justify-center text-center px-4 section-scroll">
+      <div class="section-content content-hidden">
+   
+    <!-- Title Box -->
+    <div class="animate-title">
+    <div class="title-box box-hover-effect">
+      <h2 class="fancy-title text-5xl sm:text-6xl md:text-7xl mb-2">About Me:</h2>
+    </div>
+    </div>
+
+    <!-- Subtitle Box -->
+    <div class="animate-subtitle"> 
+    <div class="subtitle-box box-hover-effect">
+      <p class="subtitle text-base sm:text-lg md:text-xl">
+       Hello, I'm Ron Manosca, a Graphic Designer and Front-End Developer! I'm currently a senior in Lehman College and I major in CGI. I have a passion in creating different artworks with the use of my computer and even my Ipad!
+      </p>
+    </div>
+  </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery-wrapper" class="min-h-screen flex flex-col justify-center items-center px-4 text-center section-scroll">
+      <div class="section-content content-hidden">
+   
+    <!-- Title Box -->
+    <div class="animate-title"> 
+    <div class="title-box box-hover-effect">
+      <h2 class="fancy-title text-5xl sm:text-6xl md:text-7xl mb-2">Art Gallery</h2>
+    </div>
+    </div>
+
+    <div class="grid gap-8 md:grid-cols-2">
+      <div class="gallery-card" data-type="2d">
+        <h3 class="card-title">2D Art</h3>
+        <p class="card-desc">Illustrations and digital works.</p>
+        <img src="/art/thumbs/2d/2D-01.jpg" alt="2D Art" class="card-image" />
+        <button type="button" class="enter-gallery-btn retro-btn">View 2D Gallery</button>
+      </div>
+      <div class="gallery-card" data-type="3d">
+        <h3 class="card-title">3D Art</h3>
+        <p class="card-desc">3D models and renders.</p>
+        <img src="/art/thumbs/3d/3D-01.jpg" alt="3D Art" class="card-image" />
+        <button type="button" class="enter-gallery-btn retro-btn">View 3D Gallery</button>
+      </div>
+    </div>
+    </div>
+  </section>
+
+ <!-- Art Gallery Viewer -->
+<section id="art-gallery" class="hidden px-4 py-16 text-center fade-scroll">
 <button class="back-btn retro-btn">
 <span class="arrow">←</span> Back to Gallery</button>
 
@@ -85,31 +125,40 @@
   </div>
 </section>
 
-<!-- Lightbox -->
-<div id="lightbox" class="lightbox">
-  <img id="lightbox-image" src="" alt="Full artwork">
-</div>
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox">
+    <img id="lightbox-image" src="" alt="Full artwork">
+  </div>
 
-
-
-    <!-- Contact -->
-    <section id="contact" class="min-h-screen flex flex-col items-center justify-center text-center px-4">
-      <h2 class="fancy-title text-3xl mb-4">Contact Me</h2>
-      <p class="max-w-xl">
-        Hey! If you wanna get in touch, feel free to reach out via email, or connect with me on social media. I’m always open to new opportunities!
-      </p>
-    </section>
-
-    <!-- Footer -->
-    <footer class="text-center py-6 bg-[var(--pastel-red)] text-[var(--retro-ink)] mt-8">
-      <p class="text-sm">&copy; 2025 Ron’s Portfolio. All rights reserved.</p>
-    </footer>
-
-    <!-- Curtain Transition Overlay -->
-    <div id="transition-overlay" class="fixed top-0 left-0 w-full h-full bg-white z-40 hidden flex items-center justify-center pointer-events-none">
-      <img src="/curtain.png" alt="Curtain" class="w-full h-full object-cover animate-drop" />
+  <!-- Contact -->
+  <section id="contact" class="min-h-screen flex flex-col items-center justify-center text-center px-4 section-scroll">
+    <div class="section-content content-hidden">
+   <!-- Title Box -->
+    <div class="animate-title">
+    <div class="title-box box-hover-effect">
+      <h2 class="fancy-title text-5xl sm:text-6xl md:text-7xl mb-2">Contact Me:</h2>
+    </div>
     </div>
 
-    <script type="module" src="/src/main.js"></script>
-  </body>
+    <!-- Subtitle Box -->
+    <div class="animate-subtitle"> 
+    <div class="subtitle-box box-hover-effect">
+      <p class="subtitle text-base sm:text-lg md:text-xl">
+       Feel free to reach out to say hello, ask questions, or discuss potential collaborations!
+      </p>
+    </div>
+  </div>
+  </section>
+
+  <footer class="text-center py-6 bg-[var(--pastel-red)] text-[var(--retro-ink)] mt-8">
+    <p class="text-sm">&copy; 2025 Ron’s Portfolio. All rights reserved.</p>
+  </footer>
+
+  <!-- Curtain Transition -->
+  <div id="transition-overlay" class="fixed top-0 left-0 w-full h-full z-100 hidden flex items-center justify-center pointer-events-none">
+    <img src="/curtain.png" alt="Curtain" class="w-full h-full object-cover animate-drop" />
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
 </html>

@@ -1,18 +1,61 @@
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Young+Serif&display=swap');
 @import 'tailwindcss';
+
+/* ===== Prevent horizontal scroll ===== */
 
 /* ===== Root Variables ===== */
 :root {
-  --pastel-green: #b8ecc4;
+  --pastel-green: #73e98f;
   --pastel-blue: #9bd5d8;
   --pastel-red: #ffc1b0;
   --pastel-mint: #c0f5d0;
-  --retro-ink: #3b2e2a;
+  --retro-ink: #422824;
   --retro-bg: #fff8f0;
   --pastel-green2: #b9faed;
   --pastel-light-yellow: #f7f4d9;
+  --pastel-blue2: #bbddeb;
+  --retro-light-yellow: #f6f0cb;
+  --retro-green: #73dab8;
 }
 
+/*=====Background Image =====*/
+#home, #about, #gallery-wrapper, #contact {
+  z-index: 0;
+}
+#gallery-wrapper{
+  background-image: url('/backgrounds/Gallery.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  min-height: 100vh;
+}
+
+#about{
+  background-image: url('/backgrounds/About_Me.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  min-height: 100vh;
+}
+#contact{
+  background-image: url('/backgrounds/Contact.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  min-height: 100vh;
+}
+#home{
+  background-image: url('/backgrounds/Home.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  min-height: 100vh;
+}
 /* ===== Base Styling ===== */
 body.retro-bg {
   background-color: var(--retro-bg);
@@ -27,18 +70,101 @@ header {
   padding: 0.9rem 1rem;
 }
 
+.portfolio-box {
+  border: 2px solid #3b2e2a; 
+  background-color: var(--pastel-light-yellow);
+  box-shadow: 4px 4px 0px var(--retro-ink);
+  padding: 0.2rem 0.8rem;
+  border-radius: 1rem;
+  display: inline-block;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 0 var(--retro-ink);
+  cursor: pointer;
+}
+
 /* ===== Typography ===== */
 .fancy-title {
-  font-family: 'Pacifico', cursive;
-  color: var(--pastel-green);
-  text-shadow: 2px 2px var(--pastel-blue);
-  font-size: 1.75rem;
+  font-family: 'Young Serif';
+  color: var(--retro-green);
+  text-shadow:
+-2px 2px 0 #FFB650, /* Orange shadow */
+-4px 4px 0 #FF80BF, /* Pink shadow */
+-6px 6px 0 #6868AC; /* Dark blue shadow */
+  font-size: 4.5rem;
+  
+}
+.fancy-title-header{
+  font-family: 'Young Serif', cursive;
+  color: var(--retro-green);
+  text-shadow:
+-2px 2px 0 #FFB650, /* Orange shadow */
+-4px 4px 0 #FF80BF, /* Pink shadow */
+-6px 6px 0 #6868AC; /* Dark blue shadow */
+  font-size: 2rem;
 }
 
 .subtitle {
   color: var(--retro-ink);
   font-style: italic;
 }
+
+.title-box{
+  background-color: var(--retro-light-yellow);
+  border: 3px solid var(--retro-ink);
+  border-radius: 6px;
+  padding: 0.75rem 1.5rem;
+  max-width: fit-content;
+  margin: 0.5rem auto;
+  text-align: center;
+  box-shadow:
+    4px 4px 0 var(--retro-ink);
+  user-select: none;
+  font-family: 'Comic Neue', cursive;
+  color: var(--retro-ink);
+}
+.subtitle-box {
+  max-width: 600px;
+  background-color: var(--pastel-light-yellow);
+  border: 3px solid var(--retro-ink);
+  border-radius: 6px;
+  padding: 0.75rem 1.5rem;  
+  margin: 0.5rem auto;
+  text-align: center;
+  box-shadow:
+    4px 4px 0 var(--retro-ink);
+  user-select: none;
+  font-family: 'Comic Neue', cursive;
+  color: var(--retro-ink);
+}
+
+.box-hover-effect {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.box-hover-effect:hover {
+  box-shadow: 5px 5px 0 var(--retro-ink);
+  cursor: pointer;
+  transform: scale(1.08) rotate(1deg);
+}
+
+.title-box h1 {
+  font-size: 3rem;
+  margin: 0;
+  text-shadow: 1px 1px 0 #fff8f0;
+}
+
+.subtitle-box h2 {
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin: 0;
+  color: #4a3a37;
+  text-shadow: 1px 1px 0 #fff8f0;
+}
+
 
 /* ===== Navigation Buttons (shared styles) ===== */
 .retro-btn {
@@ -93,7 +219,9 @@ header {
   border-radius: 1rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 2px solid black;
 }
+
 
 .gallery-img:hover,
 .thumb-img:hover {
@@ -177,10 +305,9 @@ header {
   box-shadow: 3px 3px 0 var(--retro-ink);
 }
 
-.enter-gallery-btn:hover {
-  background-color: var(--pastel-green);
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 3px 3px 0 var(--retro-ink);
+.enter-gallery-btn:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 1px 1px 0 var(--retro-ink);
 }
 
 /* ===== Thumbnail Grid Layout ===== */
@@ -270,6 +397,10 @@ header {
 #transition-overlay.slide-up {
   animation: slideUp 0.8s forwards ease-in-out;
 }
+#transition-overlay {
+  z-index: 40;
+}
+
 
 .nav-btn {
   display: inline-flex;
@@ -297,4 +428,198 @@ header {
 .nav-btn:active {
   transform: translateY(1px);
   box-shadow: 1px 1px 0 var(--retro-ink);
+}
+
+/* === Homepage Animations === */
+@keyframes scale-in {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-title {
+  animation: scale-in 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-subtitle {
+  opacity: 0;
+  animation: fade-in 0.8s ease-out forwards;
+  animation-delay: 0.6s;
+  animation-fill-mode: forwards;
+}
+
+
+
+/* ===== Fade in scroll ===== */
+.fade-scroll{
+  opacity: 0;
+   transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-scroll.fade {
+  opacity: 0;
+}
+.fade-scroll.visible {
+  opacity: 1;
+}
+.fade-scroll {
+  will-change: opacity;
+}
+.fade-scroll.faded {
+  opacity: 1;
+  transform: translateY(0);
+}
+section {
+  will-change: opacity;
+  transition: opacity 0.5s ease;
+}
+.section-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.section-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.5s ease;
+}
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scroll-fade {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  will-change: opacity, transform;
+}
+
+.scroll-fade.visible {
+  animation: fade-in-up 0.6s ease forwards;
+}
+
+/* Section scroll fade in/out */
+.section-scroll {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+  will-change: opacity, transform;
+}
+.section-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== Card animate ===== */
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-animate {
+  opacity: 0;
+  animation: fade-in-up 0.7s ease-out forwards;
+}
+
+/* === Utility for hiding text === */
+.content-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* === Utility for fading text in === */
+.content-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(0);
+}
+
+#HomeChar01-img {
+  background-image: url('./backgrounds/HomeChar.01.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transform-origin: center center;
+  position: absolute;
+  right: -480px;
+  bottom: -100px;
+  width: 500px;
+  height: 500px;
+  opacity: 0;
+}
+@keyframes rotateWiggle {
+  0%   { transform: rotate(1deg) scale(1); }
+  50%  { transform: rotate(0deg) scale(1.05); }
+  100% { transform: rotate(1deg) scale(1); }
+}
+
+.hover-rotate-wrapper:hover  {
+  animation: rotateWiggle 0.9s ease-in-out infinite;
+   transform-origin: center center;
+}
+
+[data-animate="slide-in-right"] {
+  animation: slide-in-right 1.2s ease-out forwards;
+}
+.reset-animation {
+  animation: none !important;
+}
+.animate-restart {
+  animation-delay: 0.5s;
+  position: absolute;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+[data-animate="slide-in-right"].animate-restart {
+  animation: slide-in-right 1.2s ease-out forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(-20px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
