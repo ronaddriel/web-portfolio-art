@@ -107,7 +107,7 @@ header {
   background-color: var(--retro-light-yellow); /* soft yellow retro */
   border: 5px solid var(--retro-ink);
   border-radius: 0 0 0.9rem 0.9rem; /* rounded bottom corners */
-  box-shadow: 4px 4px 0 var(--retro-ink);
+  box-shadow: 2px 2px 0 var(--retro-ink);
   padding: 0.9rem 1rem;
   
   
