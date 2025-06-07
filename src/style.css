@@ -4,6 +4,11 @@
 
 /* ===== Prevent horizontal scroll ===== */
 body{
+  background-image: url('/backgrounds/Web_app_Background_ .png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   overflow-x: hidden;
 }
 /* ===== Root Variables ===== */
@@ -27,36 +32,61 @@ body{
 }
 #gallery-wrapper{
   background-image: url('/backgrounds/Gallery.jpg');
-  background-size: cover;
+  background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
   min-height: 100vh;
+
+  border: 3px solid var(--retro-ink); /* #3b2e2a as defined earlier */
+  border-radius: 1rem;
+  box-shadow: 4px 4px 0 4px var(--retro-ink); /* optional: thicker ink edge */
+  margin: 2rem;
+  padding: 1rem;
+  
 }
 
 #about{
   background-image: url('/backgrounds/About_Me.jpg');
-  background-size: cover;
+  background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
   min-height: 100vh;
+
+  border: 3px solid var(--retro-ink); /* #3b2e2a as defined earlier */
+  border-radius: 1rem;
+  box-shadow: 4px 4px 0 4px var(--retro-ink); /* optional: thicker ink edge */
+  margin: 2rem;
+  padding: 1rem;
 }
 #contact{
   background-image: url('/backgrounds/Contact.jpg');
-  background-size: cover;
+  background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
   min-height: 100vh;
+
+  border: 3px solid var(--retro-ink); /* #3b2e2a as defined earlier */
+  border-radius: 1rem;
+  box-shadow: 4px 4px 0 4px var(--retro-ink); /* optional: thicker ink edge */
+  margin: 2rem;
+  padding: 1rem;
 }
 #home{
   background-image: url('/backgrounds/Home.jpg');
-  background-size: cover;
+  background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
   min-height: 100vh;
+
+  border: 3px solid var(--retro-ink); /* #3b2e2a as defined earlier */
+  border-radius: 1rem;
+  box-shadow: 4px 4px 0 4px var(--retro-ink); /* optional: thicker ink edge */
+  margin: 2rem;
+  padding: 1rem;
 }
 /* ===== Base Styling ===== */
 body.retro-bg {
@@ -69,14 +99,23 @@ body.retro-bg {
 
 /* ===== Header ===== */
 header {
-  padding: 0.9rem 1rem;
-   position: fixed;  /* or sticky */
-  top: 0;
-  left: 0;
+  position: fixed;
+   top: 0;
+   left: 0;
   width: 100%;
-  z-index: 10000;  /* higher than overlay's 9999 */
+  z-index: 10001;
+  background-color: var(--retro-light-yellow); /* soft yellow retro */
+  border: 5px solid var(--retro-ink);
+  border-radius: 0 0 0.9rem 0.9rem; /* rounded bottom corners */
+  box-shadow: 4px 4px 0 var(--retro-ink);
+  padding: 0.9rem 1rem;
+  
+  
 }
 
+header {
+  display: flex !important;
+}
 .portfolio-box {
   border: 2px solid #3b2e2a; 
   background-color: var(--pastel-light-yellow);
@@ -508,7 +547,7 @@ header {
 }
 section {
   will-change: opacity;
-  transition: opacity 0.5s ease;
+  transition: opacity 1 !important;
 }
 .section-hidden {
   opacity: 0;

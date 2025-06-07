@@ -101,8 +101,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const isMobile = window.innerWidth <= 768;
 
     function goToTargetSection() {
+     
+      if (header?.style.display === 'none') {
+      header.style.display = '';
+} 
       // Unhide all main sections
-      document.querySelectorAll('section').forEach(section => {
+      document.querySelectorAll('main section').forEach(section => {
         section.classList.remove('hidden');
       });
 
@@ -280,24 +284,16 @@ pressables.forEach(elem => {
   elem.addEventListener('pointerdown', () => {
     elem.classList.add('pressed');
   });
-
-  
   elem.addEventListener('animationend', () => {
     elem.classList.remove('pressed');
   });
-
-  //
   elem.addEventListener('pointercancel', () => {
     elem.classList.remove('pressed');
   });
-
-  
   elem.addEventListener('pointerup', () => {
     elem.classList.remove('pressed');
   });
 });
-
-
   // Scroll Animations
   const fadeObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
